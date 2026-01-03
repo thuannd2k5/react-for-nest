@@ -27,16 +27,9 @@ export const callCareerChatAI = (
 };
 
 
-export const callGenerateJobDescriptionAI = (jobDraft: {
-    name?: string;
-    location?: string;
-    level?: string;
-    skills?: string[];
-    salary?: string;
-}) => {
-    return axios.post(`/api/v1/llm/ai-generate`, {
-        jobDraft,
-    });
+export const callGenerateJobDescriptionAI = (payload: any) => {
+    return axios.post('/api/v1/llm/ai-generate', payload);
 };
+
 
 

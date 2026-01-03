@@ -112,7 +112,7 @@ const JobCard = (props: IProps) => {
                             </div>
                         </Col>
 
-                        {displayJob?.map((item) => (
+                        {displayJob?.map((item: any) => (
                             <Col span={24} md={12} key={item._id}>
                                 <Card
                                     size="small"

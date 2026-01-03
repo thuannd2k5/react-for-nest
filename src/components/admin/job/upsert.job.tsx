@@ -1,4 +1,4 @@
-import { Breadcrumb, Col, ConfigProvider, Divider, Form, Row, message, notification } from "antd";
+import { Breadcrumb, Button, Col, ConfigProvider, Divider, Form, Row, message, notification } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { DebounceSelect } from "../user/debouce.select";
 import { FooterToolbar, ProForm, ProFormDatePicker, ProFormDigit, ProFormSelect, ProFormSwitch, ProFormText } from "@ant-design/pro-components";
@@ -13,6 +13,7 @@ import { CheckSquareOutlined } from "@ant-design/icons";
 import enUS from 'antd/lib/locale/en_US';
 import dayjs from 'dayjs';
 import { IJob } from "@/types/backend";
+import { callGenerateJobDescriptionAI } from '@/config/ai.api';
 
 const ViewUpsertJob = (props: any) => {
     const [companies, setCompanies] = useState<ICompanySelect[]>([]);
@@ -25,6 +26,50 @@ const ViewUpsertJob = (props: any) => {
     const id = params?.get("id"); // job id
     const [dataUpdate, setDataUpdate] = useState<IJob | null>(null);
     const [form] = Form.useForm();
+
+    const [aiLoading, setAiLoading] = useState(false);
+
+    const handleGenerateJobByAI = async () => {
+        try {
+            const values = form.getFieldsValue();
+
+            if (!values?.name && (!values?.skills || values.skills.length === 0)) {
+                message.warning('Vui lòng nhập ít nhất Tên Job hoặc Kỹ năng');
+                return;
+            }
+
+            setAiLoading(true);
+
+            const jobInput = {
+                name: values.name,
+                skills: values.skills,
+                location: values.location,
+                level: values.level,
+                quantity: values.quantity,
+                salary: values.salary ? String(values.salary) : undefined,
+            };
+
+            const res = await callGenerateJobDescriptionAI(jobInput);
+
+            const aiData = res?.data;
+
+            if (aiData?.description) {
+                // 1. update state cho ReactQuill
+                setValue(aiData.description);
+
+                // 2. update AntD Form
+                form.setFieldValue('description', aiData.description);
+
+                notification.success({
+                    message: 'AI đã tạo mô tả job',
+                    description: 'Bạn có thể chỉnh sửa lại trước khi lưu',
+                });
+            }
+        } finally {
+            setAiLoading(false);
+        }
+    };
+
 
     useEffect(() => {
         const init = async () => {
@@ -315,18 +360,33 @@ const ViewUpsertJob = (props: any) => {
                                 />
                             </Col>
                             <Col span={24}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                                    <span style={{ fontWeight: 500 }}>Miêu tả job</span>
+                                    <Button
+                                        type="dashed"
+                                        size="small"
+                                        loading={aiLoading}
+                                        onClick={handleGenerateJobByAI}
+                                    >
+                                        🤖 AI hỗ trợ viết mô tả
+                                    </Button>
+                                </div>
+
                                 <ProForm.Item
                                     name="description"
-                                    label="Miêu tả job"
                                     rules={[{ required: true, message: 'Vui lòng nhập miêu tả job!' }]}
                                 >
                                     <ReactQuill
                                         theme="snow"
                                         value={value}
-                                        onChange={setValue}
+                                        onChange={(content) => {
+                                            setValue(content);
+                                            form.setFieldValue('description', content); // 🔥 đồng bộ
+                                        }}
                                     />
                                 </ProForm.Item>
                             </Col>
+
                         </Row>
                         <Divider />
                     </ProForm>
