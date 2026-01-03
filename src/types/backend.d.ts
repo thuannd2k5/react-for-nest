@@ -38,8 +38,8 @@ export interface IAccount {
 export interface IGetAccount extends Omit<IAccount, "access_token"> { }
 
 export interface ICompany {
-    _id?: string;
-    name?: string;
+    _id: string;
+    name: string;
     address?: string;
     logo: string;
     description?: string;
