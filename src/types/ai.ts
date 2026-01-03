@@ -7,3 +7,15 @@ export type CompanyAIVerification = {
 };
 
 
+export type JobAIVerification = {
+    job_legitimacy: 'hợp lý' | 'đáng ngờ' | 'rủi ro cao';
+    confidence: number;
+    risk_reasons: string[];
+    suitable_for: string[];
+    required_skills: string[];
+    language_requirement: {
+        required: boolean;
+        languages: string[];
+    };
+    recommendations: string[];
+};

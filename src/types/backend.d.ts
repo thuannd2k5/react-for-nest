@@ -77,7 +77,7 @@ export interface IUser {
 }
 
 export interface IJob {
-    _id?: string;
+    _id: string;
     name: string;
     skills: string[];
     company?: {

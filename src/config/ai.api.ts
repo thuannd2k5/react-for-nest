@@ -7,7 +7,7 @@ export const callAnalyzeCompanyAI = (companyId: string) => {
 
 
 export const callAnalyzeJobAI = (jobId: string) => {
-    return axios.post(`/api/v1/llm/check-job/${jobId}`);
+    return axios.get(`/api/v1/llm/check-job/${jobId}`);
 };
 
 export const callCareerChatAI = (
