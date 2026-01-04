@@ -10,20 +10,14 @@ export const callAnalyzeJobAI = (jobId: string) => {
     return axios.get(`/api/v1/llm/check-job/${jobId}`);
 };
 
-export const callCareerChatAI = (
-    userMessage: string,
-    history: { role: string; message: string }[],
-    context?: {
-        jobId?: string;
-        companyId?: string;
-        userLevel?: string;
-    }
-) => {
-    return axios.post(`/api/v1/chat-ai/chat`, {
-        userMessage,
-        history,
-        context,
+export const callCareerChatAI = (message: string) => {
+    return axios.post('/api/v1/chat-ai/chat', {
+        message,
     });
+};
+
+export const callGetChatHistory = () => {
+    return axios.get('/api/v1/chat-ai/history');
 };
 
 

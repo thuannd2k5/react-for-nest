@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { callLogout } from '@/config/api';
 import { setLogoutAction } from '@/redux/slice/accountSlide';
 import ManageAccount from './modal/manage.account';
+import { MessageOutlined } from '@ant-design/icons';
 
 const Header = (props: any) => {
     const navigate = useNavigate();
@@ -44,6 +45,11 @@ const Header = (props: any) => {
             label: <Link to={'/company'}>Top Công ty IT</Link>,
             key: '/company',
             icon: <RiseOutlined />,
+        },
+        {
+            label: <Link to={'/chat-ai'}>Chat AI</Link>,
+            key: '/chat-ai',
+            icon: <MessageOutlined />,
         }
     ];
 
