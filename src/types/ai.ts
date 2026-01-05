@@ -28,4 +28,15 @@ export type CareerChatResponse = {
     reply: string;
     analysis: string[];
     follow_up_questions: string[];
+    suggested_jobs: string[];
+};
+
+export type ChatMessage = {
+    id: string;
+    role: 'user' | 'assistant';
+    message: string;
+    analysis?: string[];
+    follow_up_questions?: string[];
+    suggested_jobs?: string[];
+    loading?: boolean;
 };
