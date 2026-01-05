@@ -72,9 +72,7 @@ const ClientJobDetailPage = (props: any) => {
                                 <div className={styles["location"]}>
                                     <EnvironmentOutlined style={{ color: '#58aaab' }} />&nbsp;{getLocationName(jobDetail.location)}
                                 </div>
-                                <div>
-                                    <HistoryOutlined /> {dayjs(jobDetail.updatedAt).fromNow()}
-                                </div>
+
                                 <Divider />
                                 {parse(jobDetail.description)}
                             </Col>

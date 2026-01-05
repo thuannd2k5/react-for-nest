@@ -118,7 +118,7 @@ const JobCard = ({ showPagination = false }: IProps) => {
                                                 <ThunderboltOutlined style={{ color: 'orange' }} />{' '}
                                                 {(item.salary + '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ
                                             </div>
-                                            <div>{dayjs(item.updatedAt).fromNow()}</div>
+
                                         </div>
                                     </div>
                                 </Card>
