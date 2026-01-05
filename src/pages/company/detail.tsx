@@ -57,6 +57,7 @@ const ClientCompanyDetailPage = (props: any) => {
                                         <img
                                             alt="example"
                                             src={`${import.meta.env.VITE_BACKEND_URL}/images/company/${companyDetail?.logo}`}
+                                            style={{ height: "400px", width: "400px" }}
                                         />
                                     </div>
                                     <div>
