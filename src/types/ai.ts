@@ -12,10 +12,20 @@ export type JobAIVerification = {
     confidence: number;
     risk_reasons: string[];
     suitable_for: string[];
-    required_skills: string[];
+    required_skills: {
+        hard_skills: string[];
+        soft_skills: string[];
+    };
     language_requirement: {
         required: boolean;
         languages: string[];
     };
     recommendations: string[];
+};
+
+
+export type CareerChatResponse = {
+    reply: string;
+    analysis: string[];
+    follow_up_questions: string[];
 };

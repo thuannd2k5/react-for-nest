@@ -43,7 +43,10 @@ const CompanyAIVerificationModal = ({
                     </Tag>
 
                     <p style={{ marginTop: 10 }}>
-                        <b>Độ tin cậy:</b> {Math.min(data.confidence, 95)}%
+                        <b>Độ tin cậy:</b>
+                        {typeof data.confidence === 'number'
+                            ? Math.min(data.confidence, 95)
+                            : 'Không xác định'}%
                     </p>
 
                     <Divider />
