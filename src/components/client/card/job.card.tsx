@@ -17,9 +17,10 @@ dayjs.extend(relativeTime);
 
 interface IProps {
     showPagination?: boolean;
+    query?: string;
 }
 
-const JobCard = ({ showPagination = false }: IProps) => {
+const JobCard = ({ showPagination = false, query = '' }: IProps) => {
     /* ===== LIST JOB ===== */
     const [displayJob, setDisplayJob] = useState<IJob[] | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -37,11 +38,17 @@ const JobCard = ({ showPagination = false }: IProps) => {
 
     useEffect(() => {
         fetchJob();
-    }, [current]);
+    }, [current, query]);
+
 
     const fetchJob = async () => {
         setIsLoading(true);
-        const res = await callFetchJob(`current=${current}&pageSize=${pageSize}`);
+        const searchQuery = query ? `&${query}` : '';
+
+        const res = await callFetchJob(
+            `current=${current}&pageSize=${pageSize}${searchQuery}`
+        );
+
         if (res?.data) {
             setDisplayJob(res.data.result);
             setTotal(res.data.meta.total);
